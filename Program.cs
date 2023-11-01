@@ -1,39 +1,97 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Text.Json;
 
-Console.WriteLine("Hello, World!");
+// Console.WriteLine("Hello, World!");
 
 
-List<FlashCard> Cards = new List<FlashCard>();
+StudySet? set = null;
 
-var jsondoc = File.ReadAllText("flashcards.json");
+var docs = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\flashcards\\";
 
-var result = JsonSerializer.Deserialize<List<FlashCard>>(jsondoc);
+Console.WriteLine(docs);
 
-if (result != null && result.Count > 0)
+if (!Directory.Exists(docs))
 {
-    Cards = result;
+    Directory.CreateDirectory(docs);
+    Console.WriteLine("Directory Created");
 }
 
+var files = Directory.GetFiles(docs, "*.json");
 
+if (files.Length == 0)
+{
+    CardCreator creator = new CardCreator();
+    set = creator.CreateNewStudySet();
+}
+else
+{
 
+    Console.WriteLine("Load a study set or create a new one? (l/c)");
+
+    var result = Console.ReadLine();
+
+    if (result == "l")
+    {
+        Console.WriteLine("Which study set would you like to load?");
+
+        int i = 0;
+
+        foreach (var x in files)
+        {
+            Console.WriteLine((i + 1) + ": " + x);
+            i++;
+        }
+
+        var fileNumber = Console.ReadLine();
+
+        if (fileNumber == null)
+        {
+            Console.WriteLine("You must enter a valid number");
+            return;
+        }
+
+        var json = File.ReadAllText(files[(int.Parse(fileNumber) - 1)]);
+        set = JsonSerializer.Deserialize<StudySet>(json);
+    }
+    else if (result == "c")
+    {
+        CardCreator creator = new CardCreator();
+        set = creator.CreateNewStudySet();
+    }
+    else
+    {
+        Console.WriteLine("You must enter a valid option");
+        return;
+    }
+}
+
+if (set == null)
+{
+    Console.WriteLine("Something went wrong");
+    return;
+}
 
 var quiz = "";
 
 while (quiz != "x")
 {
-    Console.WriteLine("Quiz, Edit, or Exit? (q/e/x)");
+    Console.WriteLine("Quiz, Edit, Study, or Exit? (q/e/s/x)");
     quiz = Console.ReadLine();
 
     if (quiz == "q")
     {
         Quiz quizTime = new Quiz();
-        quizTime.QuizPlayer(Cards);
+        quizTime.QuizPlayer(set.Cards);
     }
     else if (quiz == "e")
     {
         CardCreator creator = new CardCreator();
-        creator.AddCards(Cards);
+        creator.AddCards(set);
+    }
+    else if (quiz == "s")
+    {
+        Study study = new Study();
+        study.StudyMainMenu(set.Cards);
     }
     else if (quiz == "x")
     {
