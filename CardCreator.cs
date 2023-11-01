@@ -8,7 +8,7 @@ public class CardCreator
 {
 
 
-    private static readonly string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\flashcards\\";
+    private static readonly string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\flashcards\\"; //TODO: change this to a local file
 
 
     public StudySet CreateNewStudySet()

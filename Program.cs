@@ -6,7 +6,7 @@ using System.Text.Json;
 
 StudySet? set = null;
 
-var docs = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\flashcards\\";
+var docs = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\flashcards\\"; //TODO: change this to a local file location
 
 Console.WriteLine(docs);
 
