@@ -1,1 +1,7 @@
-[{"Id":"7d320c02-6d68-49ab-8b1a-7ac594580af9","Question":"test","Answer":"test"}]
+[
+    {
+        "Id": "7d320c02-6d68-49ab-8b1a-7ac594580af9",
+        "Question": "test",
+        "Answer": "test"
+    }
+]

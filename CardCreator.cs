@@ -70,6 +70,8 @@ public class CardCreator
         }
     }
 
+    //TODO: 
+
     public void AddCard(StudySet set)
     {
 

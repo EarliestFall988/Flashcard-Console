@@ -102,3 +102,8 @@ while (quiz != "x")
         Console.WriteLine("Please enter a valid option");
     }
 }
+
+
+
+//write a function to take a value to the second power
+
